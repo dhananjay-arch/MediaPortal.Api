@@ -3,6 +3,8 @@ WORKDIR /src
 
 COPY . .
 
+WORKDIR /src/backend/MediaPortal.Api
+
 RUN dotnet restore
 RUN dotnet publish -c Release -o /app/publish
 
