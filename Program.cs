@@ -22,11 +22,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policy =>
     {
         policy
-            .WithOrigins(
-                "http://localhost:3000",
-                "http://localhost:5173",
-                "http://localhost:5174",
-                "https://*.vercel.app")
+            .AllowAnyOrigin()
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
@@ -43,5 +39,6 @@ app.UseMiddleware<BearerTokenMiddleware>();
 app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
 
 app.MapControllers();
-
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+app.Urls.Add($"http://*:{port}");
 app.Run();
